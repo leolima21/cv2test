@@ -1,16 +1,39 @@
 #!/usr/bin/env python 
-import numpy as np 
+
+#libs:
+import rospy
 import cv2
+import time
+from cv_bridge import CvBridge, CvBridgeError
+import numpy as np
+from std_msgs.msg import String
+from std_msgs.msg import Int32
+from sensor_msgs.msg import Image
 
-cap = cv2.VideoCapture(0)
+class camera:
+	def __init__(self):
+		# create a node
+		rospy.init_node('nodecv2', anonymous=True)
+		# publisher object
+		self.pub = rospy.Publisher('topiccv2', Image, queue_size=10)
+		
+		# bridge object
+		self.bridge = CvBridge()
 
+		# camera setup
+		self.cap = cv2.VideoCapture(0)
 
-while(True):
-	# Capture frame-by-frame
-	ret, frame = cap.read()
-  
-	# Display the resulting frame
-	cv2.imshow('frame', frame)
+	# pub metod
+	def pub_img(self):
+		while True:
+			ret, cv2_frame = self.cap.read()
+			ros_frame = self.bridge.cv2_to_imgmsg(cv2_frame, "bgr8")
+			self.pub.publish(ros_frame)
 
-	if cv2.waitKey(1) == ord('q'):
-		break
+# main function
+if __name__	== '__main__':
+	try:
+		campub = camera()
+		campub.pub_img()
+	except rospy.ROSInterruptException:
+		pass			
