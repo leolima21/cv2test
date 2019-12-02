@@ -27,6 +27,7 @@ class camera:
 	def pub_img(self):
 		while True:
 			ret, cv2_frame = self.cap.read()
+			cv2.circle(cv2_frame,(20, 20), 5, (0,255,0), -1)
 			ros_frame = self.bridge.cv2_to_imgmsg(cv2_frame, "bgr8")
 			self.pub.publish(ros_frame)
 
