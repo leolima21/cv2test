@@ -39,13 +39,16 @@ class camera:
 			g = cv2_frame[:, :, 1]
 			b = cv2_frame[:, :, 0]
 
-			# draw a line
-			r[50:100, :] = 255
+			# effects
+			b[(b > 100) & (g < 200)] = 255
+			b[b < 255] = 0
 
 			# merge rgb channels
 			x = cv2_frame
+			x[:,:,0] = b
+			x[:,:,1] = g
 			x[:,:,2] = r
-
+			
 			# show rgb channels
 			cv2.imshow('b', b)
 			cv2.imshow('g', g)
