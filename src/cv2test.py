@@ -32,10 +32,25 @@ class camera:
 			cv2.namedWindow('r', cv2.WINDOW_NORMAL)
 			cv2.namedWindow('g', cv2.WINDOW_NORMAL)
 			cv2.namedWindow('b', cv2.WINDOW_NORMAL)
+			cv2.namedWindow('x', cv2.WINDOW_NORMAL)
+			
+			# rgb var
+			r = cv2_frame[:, :, 2]
+			g = cv2_frame[:, :, 1]
+			b = cv2_frame[:, :, 0]
+
+			# draw a line
+			r[50:100, :] = 255
+
+			# merge rgb channels
+			x = cv2_frame
+			x[:,:,2] = r
+
 			# show rgb channels
-			cv2.imshow('b', cv2_frame[:, :, 0])
-			cv2.imshow('g', cv2_frame[:, :, 1])
-			cv2.imshow('r', cv2_frame[:, :, 2])
+			cv2.imshow('b', b)
+			cv2.imshow('g', g)
+			cv2.imshow('r', r)
+			cv2.imshow('x', x)
 			
 			if cv2.waitKey(1) == ord('q'):
 				break
