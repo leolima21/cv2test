@@ -32,6 +32,9 @@ class camera:
 			# cimg = cv2.cvtColor(cv2_frame, cv2.COLOR_GRAY2BGR)
 			gray = cv2.cvtColor(cv2_frame, cv2.COLOR_BGR2GRAY)
 
+			# canny filter
+			edges = cv2.Canny(gray, 50, 150, 3)
+			cv2.imshow('canny', edges)
 
 			circles = cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1,1000, param1=30,param2=50,minRadius=20,maxRadius=150)
 
